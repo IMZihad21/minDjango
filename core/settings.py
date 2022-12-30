@@ -1,4 +1,5 @@
 from decouple import config
+from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 
@@ -77,6 +78,19 @@ GRAPHENE = {
     "MIDDLEWARE": [
         "graphql_jwt.middleware.JSONWebTokenMiddleware",
     ],
+}
+
+# GRAPHQL_JWT definition
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_EXPIRATION_DELTA": timedelta(hours=1),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
+    # Cookie authentication
+    "JWT_HIDE_TOKEN_FIELDS": True,
+    "JWT_COOKIE_SECURE": True,
+    "JWT_COOKIE_SAMESITE": "None",
+    "JWT_COOKIE_NAME": "__jwt",
+    "JWT_CSRF_ROTATION": True,
 }
 
 # Database Definitions
