@@ -5,6 +5,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR.joinpath("static")
+TEMPLATE_DIR = BASE_DIR.joinpath("templates")
 
 SECRET_KEY = config("SECRET_KEY", default=get_random_secret_key())
 ON_PRODUCTION = config("ON_PRODUCTION", default=False, cast=bool)
@@ -20,7 +21,7 @@ DJANGO_APPS = [
 ]
 
 # Third Party apps
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = ["graphene_django"]
 
 # User defined apps
 USER_APPS = []
@@ -40,6 +41,18 @@ MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE
 # Module definition
 WSGI_APPLICATION = "core.wsgi.application"
 ROOT_URLCONF = "core.urls"
+
+# Template Definition
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [TEMPLATE_DIR],
+        "APP_DIRS": True,
+    },
+]
+
+# Graphene Definitions
+GRAPHENE = {"SCHEMA": "core.schema.schema"}
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
