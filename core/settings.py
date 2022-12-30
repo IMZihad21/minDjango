@@ -17,6 +17,9 @@ ALLOWED_HOSTS = ["*"]
 
 # Django built-in apps
 DJANGO_APPS = [
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
 ]
 
@@ -27,7 +30,10 @@ THIRD_PARTY_APPS = ["graphene_django"]
 USER_APPS = []
 
 # Django built-in middleware
-DJANGO_MIDDLEWARE = []
+DJANGO_MIDDLEWARE = [
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+]
 
 # Third Party middleware
 THIRD_PARTY_MIDDLEWARE = []
@@ -51,8 +57,20 @@ TEMPLATES = [
     },
 ]
 
+# Authentication Definition
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+
 # Graphene Definitions
-GRAPHENE = {"SCHEMA": "core.schema.schema"}
+GRAPHENE = {
+    "SCHEMA": "core.schema.schema",
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
+}
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
